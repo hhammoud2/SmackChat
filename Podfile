@@ -9,6 +9,6 @@ target 'SmackChat' do
   pod 'Alamofire'
   pod 'SwiftyJSON'
   pod 'Socket.IO-Client-Swift'
-  pod 'Starscream', '~> 3.0.2'
   pod 'SideMenu'
+  pod 'PinLayout'
 end
