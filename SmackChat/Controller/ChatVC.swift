@@ -10,25 +10,26 @@ import UIKit
 import SideMenu
 import PinLayout
 
-class ChatVC: UIViewController {
+final class ChatVC: UIViewController {
 
     //MARK: - Properties
     let topMenuBar: UIView = {
-        let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.2901960784, green: 0.3019607843, blue: 0.8470588235, alpha: 1)
+        let view = GradientView()
         return view
     }()
     
     let smackChatLabel: UILabel = {
         let label = UILabel()
         label.text = "Smack Chat"
-//        label.font = UIFont(name: "Avenir", size: 24.0)
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 17.0)
         label.textColor = .white
+        label.textAlignment = .center
         return label
     }()
     
     let sideMenuButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
+        button.tintColor = .white
         button.setTitle("", for: .normal)
         button.setImage(UIImage(named: "smackBurger"), for: .normal)
         button.addTarget(self, action: #selector(openSideMenu), for: .touchUpInside)
@@ -48,8 +49,8 @@ class ChatVC: UIViewController {
     override func viewDidLayoutSubviews() {
         //Menubar layout
         topMenuBar.pin.top().left().right().height(60)
-        sideMenuButton.pin.width(24).height(20).bottomLeft().margin(10)
-        smackChatLabel.pin.hCenter().vCenter(to: sideMenuButton.edge.vCenter).width(100).height(25)
+        sideMenuButton.pin.width(24).height(20).bottomLeft().margin(8)
+        smackChatLabel.pin.hCenter().vCenter(to: sideMenuButton.edge.vCenter).width(150).height(25)
     }
 
 
@@ -76,6 +77,7 @@ class ChatVC: UIViewController {
         
         //Customization
         SideMenuManager.default.menuWidth = self.view.frame.size.width - 60
+        SideMenuManager.default.menuFadeStatusBar = false
     }
 }
 
