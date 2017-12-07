@@ -145,7 +145,8 @@ final class LoginVC: UIViewController {
     }
     
     @objc func registerButtonPressed() {
-        //Open register VC
+        let registerVC = RegisterVC()
+        present(registerVC, animated: true, completion: nil)
     }
     
     //MARK: - Helper functions
