@@ -73,12 +73,10 @@ final class SideMenuVC: UIViewController {
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(self)
         setupView()
         addSubviews()
         channelsTable.delegate = self
         channelsTable.dataSource = self
-
     }
     
     override func viewDidLayoutSubviews() {
@@ -106,11 +104,11 @@ final class SideMenuVC: UIViewController {
         self.view.addSubview(channelsTable)
     }
     //MARK: - Button functions
-    @objc func createChannel() {
+    @objc func createChannel(_ sender: Any) {
         
     }
     
-    @objc func promptLogin() {
+    @objc func promptLogin(_ sender: Any) {
         let loginVC: LoginVC = LoginVC()
         present(loginVC, animated: true, completion: nil)
     }

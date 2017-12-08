@@ -133,18 +133,18 @@ final class LoginVC: UIViewController {
     
     //MARK: - Button functions
     
-    @objc func cancelButtonPressed() {
+    @objc func cancelButtonPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func loginButtonPressed() {
+    @objc func loginButtonPressed(_ sender: Any) {
         print("Login!")
 //        let presentingVC = presentingViewController as? SideMenu.UISideMenuNavigationController
 //        let sideMenuVC = presentingVC?.topViewController as? SideMenuVC
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func registerButtonPressed() {
+    @objc func registerButtonPressed(_ sender: Any) {
         let registerVC = RegisterVC()
         present(registerVC, animated: true, completion: nil)
     }

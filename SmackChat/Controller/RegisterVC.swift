@@ -12,6 +12,11 @@ class RegisterVC: UIViewController {
 
     //MARK: - Properties
     
+    //Default avatar name and color values
+    var avatarName = "profileDefault"
+    var avatarColor = "[0.5, 0.5, 0.5, 1.0]"
+    
+    //UI Elements
     let cancelButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("", for: .normal)
@@ -103,6 +108,7 @@ class RegisterVC: UIViewController {
         button.tintColor = .clear
         button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 12)
         button.setTitleColor(#colorLiteral(red: 0.3529411765, green: 0.6235294118, blue: 0.7960784314, alpha: 1), for: .normal)
+        button.contentVerticalAlignment = .bottom
         
         button.addTarget(self, action: #selector(chooseAvatarButtonPressed), for: .touchUpInside)
         
@@ -147,7 +153,7 @@ class RegisterVC: UIViewController {
         passwordTextField.pin.below(of: emailDividerView).marginTop(15).width(of: usernameTextField).height(of: usernameTextField).hCenter().marginBottom(5)
         passwordDividerView.pin.below(of: passwordTextField).width(of: usernameTextField).height(2).hCenter()
         avatarImageView.pin.size(75).hCenter().below(of: passwordDividerView).marginTop(30)
-        chooseAvatarButton.pin.width(100).height(20).hCenter().below(of: avatarImageView)
+        chooseAvatarButton.pin.width(100).height(95).hCenter().top(to: avatarImageView.edge.top)
         backgroundColorButton.pin.width(150).height(20).hCenter().below(of: chooseAvatarButton)
         createAccountButton.pin.width(250).height(50).bottom(15).hCenter()
 
@@ -155,19 +161,48 @@ class RegisterVC: UIViewController {
     
     //MARK: - Button functions
     
-    @objc func cancelButtonPressed() {
+    @objc func cancelButtonPressed(_ sender: Any) {
         self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
-    @objc func createButtonPressed() {
-        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-    }
-    
-    @objc func chooseAvatarButtonPressed() {
+    @objc func createButtonPressed(_ sender: Any) {
+        guard let name = usernameTextField.text, usernameTextField.text != "" else {
+            print("No username")
+            return
+        }
+        guard let email = emailTextField.text, emailTextField.text != "" else {
+            print("No email")
+            return
+        }
+        guard let password = passwordTextField.text , passwordTextField.text != "" else {
+            print("No password")
+            return
+        }
         
+        AuthService.instance.registerUser(email: email, password: password) { (success) in
+            if success {
+                AuthService.instance.loginUser(email: email, password: password, completion: { (success) in
+                    if success {
+                        AuthService.instance.createUser(name: name, email: email, avatarName: self.avatarName, avatarColor: self.avatarColor, completion: { (success) in
+                            print(success)
+                            if success {
+                                print(UserDataService.instance.name, UserDataService.instance.avatarName)
+                                self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+                                //Update UI, views, etc.
+                            }
+                        })
+                    }
+                })
+            }
+        }
     }
     
-    @objc func backgroundColorButtonPressed() {
+    @objc func chooseAvatarButtonPressed(_ sender: Any) {
+        let avatarPicker = AvatarPickerVC()
+        present(avatarPicker, animated: true, completion: nil)
+    }
+    
+    @objc func backgroundColorButtonPressed(_ sender: Any) {
         
     }
     //MARK: - Helper functions
