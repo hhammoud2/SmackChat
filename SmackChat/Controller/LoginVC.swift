@@ -76,21 +76,20 @@ final class LoginVC: UIViewController {
     
     let usernameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "username"
         textField.borderStyle = .none
         textField.font = UIFont(name: "HelveticaNeue", size: 17)
         textField.textColor = #colorLiteral(red: 0.2549019608, green: 0.3294117647, blue: 0.7254901961, alpha: 1)
-        
+        textField.attributedPlaceholder = NSAttributedString(string: "username", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
         return textField
     }()
     
     let passwordTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "password"
         textField.borderStyle = .none
         textField.font = UIFont(name: "HelveticaNeue", size: 17)
         textField.textColor = #colorLiteral(red: 0.2549019608, green: 0.3294117647, blue: 0.7254901961, alpha: 1)
         textField.isSecureTextEntry = true
+        textField.attributedPlaceholder = NSAttributedString(string: "password", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
 
         return textField
     }()

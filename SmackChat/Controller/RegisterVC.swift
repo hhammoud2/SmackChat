@@ -15,6 +15,7 @@ class RegisterVC: UIViewController {
     //Default avatar name and color values
     var avatarName = "profileDefault"
     var avatarColor = "[0.5, 0.5, 0.5, 1.0]"
+    var bgColor: UIColor?
     
     //UI Elements
     let cancelButton: UIButton = {
@@ -52,32 +53,29 @@ class RegisterVC: UIViewController {
     
     let usernameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "username"
         textField.borderStyle = .none
         textField.font = UIFont(name: "HelveticaNeue", size: 15)
         textField.textColor = #colorLiteral(red: 0.2549019608, green: 0.3294117647, blue: 0.7254901961, alpha: 1)
-        
+        textField.attributedPlaceholder = NSAttributedString(string: "username", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
         return textField
     }()
     
     let passwordTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "password"
         textField.borderStyle = .none
         textField.font = UIFont(name: "HelveticaNeue", size: 15)
         textField.textColor = #colorLiteral(red: 0.2549019608, green: 0.3294117647, blue: 0.7254901961, alpha: 1)
         textField.isSecureTextEntry = true
-        
+        textField.attributedPlaceholder = NSAttributedString(string: "password", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
         return textField
     }()
     
     let emailTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "email"
         textField.borderStyle = .none
         textField.font = UIFont(name: "HelveticaNeue", size: 15)
         textField.textColor = #colorLiteral(red: 0.2549019608, green: 0.3294117647, blue: 0.7254901961, alpha: 1)
-        
+        textField.attributedPlaceholder = NSAttributedString(string: "email", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
         return textField
     }()
     
@@ -128,11 +126,18 @@ class RegisterVC: UIViewController {
     }()
     
     let avatarImageView: UIImageView = {
-        let imageView = UIImageView()
+        let imageView = CircleImage()
         imageView.image = #imageLiteral(resourceName: "profileDefault")
         imageView.contentMode = .scaleAspectFit
         
         return imageView
+    }()
+    
+    let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.activityIndicatorViewStyle = .whiteLarge
+        indicator.color = #colorLiteral(red: 0.2549019608, green: 0.3294117647, blue: 0.7254901961, alpha: 1)
+        return indicator
     }()
 
     //MARK: - Life Cycle
@@ -140,7 +145,19 @@ class RegisterVC: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         addSubviews()
-        // Do any additional setup after loading the view.
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        view.addGestureRecognizer(tap)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if UserDataService.instance.avatarName != "" {
+            avatarImageView.image = UIImage(named: UserDataService.instance.avatarName)
+            avatarName = UserDataService.instance.avatarName
+            if avatarName.contains("light") && bgColor == nil {
+                avatarImageView.backgroundColor = .lightGray
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -156,7 +173,7 @@ class RegisterVC: UIViewController {
         chooseAvatarButton.pin.width(100).height(95).hCenter().top(to: avatarImageView.edge.top)
         backgroundColorButton.pin.width(150).height(20).hCenter().below(of: chooseAvatarButton)
         createAccountButton.pin.width(250).height(50).bottom(15).hCenter()
-
+        activityIndicator.pin.hCenter().vCenter(-100).size(30)
     }
     
     //MARK: - Button functions
@@ -166,6 +183,8 @@ class RegisterVC: UIViewController {
     }
     
     @objc func createButtonPressed(_ sender: Any) {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
         guard let name = usernameTextField.text, usernameTextField.text != "" else {
             print("No username")
             return
@@ -184,10 +203,11 @@ class RegisterVC: UIViewController {
                 AuthService.instance.loginUser(email: email, password: password, completion: { (success) in
                     if success {
                         AuthService.instance.createUser(name: name, email: email, avatarName: self.avatarName, avatarColor: self.avatarColor, completion: { (success) in
-                            print(success)
                             if success {
-                                print(UserDataService.instance.name, UserDataService.instance.avatarName)
+                                self.activityIndicator.isHidden = true
+                                self.activityIndicator.stopAnimating()
                                 self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+                                NotificationCenter.default.post(name: NOTIF_USER_DATA_DID_CHANGE, object: nil)
                                 //Update UI, views, etc.
                             }
                         })
@@ -203,7 +223,17 @@ class RegisterVC: UIViewController {
     }
     
     @objc func backgroundColorButtonPressed(_ sender: Any) {
-        
+        let red = CGFloat(arc4random_uniform(255)) / 255
+        let green = CGFloat(arc4random_uniform(255)) / 255
+        let blue = CGFloat(arc4random_uniform(255)) / 255
+        bgColor = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+        UIView.animate(withDuration: 0.2) {
+            self.avatarImageView.backgroundColor = self.bgColor
+        }
+    }
+    
+    @objc func handleTap() {
+        view.endEditing(true)
     }
     //MARK: - Helper functions
     
@@ -220,6 +250,7 @@ class RegisterVC: UIViewController {
         self.view.addSubview(avatarImageView)
         self.view.addSubview(chooseAvatarButton)
         self.view.addSubview(backgroundColorButton)
+        self.view.addSubview(activityIndicator)
     }
 
 }

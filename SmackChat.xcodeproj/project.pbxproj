@@ -22,6 +22,7 @@
 		F051B96E1FD5FBF80021B873 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F051B96C1FD5FBF80021B873 /* LaunchScreen.storyboard */; };
 		F0B087DC1FDB0C4A0041B307 /* AvatarPickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B087DB1FDB0C4A0041B307 /* AvatarPickerVC.swift */; };
 		F0B087DE1FDB11E70041B307 /* AvatarPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B087DD1FDB11E70041B307 /* AvatarPickerCell.swift */; };
+		F0B087E01FDB43220041B307 /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B087DF1FDB43220041B307 /* CircleImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		F051B96F1FD5FBF80021B873 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0B087DB1FDB0C4A0041B307 /* AvatarPickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPickerVC.swift; sourceTree = "<group>"; };
 		F0B087DD1FDB11E70041B307 /* AvatarPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPickerCell.swift; sourceTree = "<group>"; };
+		F0B087DF1FDB43220041B307 /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 				F04369441FD72AC70074CC11 /* GradientView.swift */,
 				F048B3B01FD85BB3006BB73B /* ChannelCell.swift */,
 				F0B087DD1FDB11E70041B307 /* AvatarPickerCell.swift */,
+				F0B087DF1FDB43220041B307 /* CircleImage.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				F051B9661FD5FBF70021B873 /* ChatVC.swift in Sources */,
 				F051B9641FD5FBF70021B873 /* AppDelegate.swift in Sources */,
 				F0B087DE1FDB11E70041B307 /* AvatarPickerCell.swift in Sources */,
+				F0B087E01FDB43220041B307 /* CircleImage.swift in Sources */,
 				F0B087DC1FDB0C4A0041B307 /* AvatarPickerVC.swift in Sources */,
 				F048B3B31FD86B14006BB73B /* LoginVC.swift in Sources */,
 				F04953C31FD9C928009EE161 /* AuthService.swift in Sources */,

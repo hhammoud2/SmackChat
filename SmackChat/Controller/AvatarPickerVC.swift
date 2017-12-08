@@ -11,6 +11,9 @@ import UIKit
 class AvatarPickerVC: UIViewController {
 
     //MARK: - Properties
+    
+    var avatarType = AvatarType.dark
+    
     let backButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("", for: .normal)
@@ -74,7 +77,13 @@ class AvatarPickerVC: UIViewController {
     }
     
     @objc func changeColor(_ sender: Any) {
-        print(darkLightSegmentedControl.selectedSegmentIndex)
+        if darkLightSegmentedControl.selectedSegmentIndex == 0 {
+            avatarType = AvatarType.dark
+        }
+        else if darkLightSegmentedControl.selectedSegmentIndex == 1 {
+            avatarType = AvatarType.light
+        }
+        avatarImageCollection.reloadData()
     }
 }
 
@@ -85,6 +94,7 @@ extension AvatarPickerVC: UICollectionViewDelegateFlowLayout, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "avatar cell", for: indexPath) as? AvatarPickerCell {
+            cell.configureCell(index: indexPath.item, type: avatarType)
             return cell
         }
         else {
@@ -92,5 +102,27 @@ extension AvatarPickerVC: UICollectionViewDelegateFlowLayout, UICollectionViewDa
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        var numOfColumns: CGFloat = 3
+        if UIScreen.main.bounds.width > 320 {
+            numOfColumns = 4
+        }
+        
+        let spaceBetweenCells: CGFloat = 10
+        let padding: CGFloat = 40
+        let cellDimension = ((collectionView.bounds.width - padding) - (numOfColumns - 1) * spaceBetweenCells)/numOfColumns
+        
+        return CGSize(width: cellDimension, height: cellDimension)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if avatarType == .dark {
+            UserDataService.instance.setAvatarName(avatarName: "dark\(indexPath.item)")
+        }
+        else {
+            UserDataService.instance.setAvatarName(avatarName: "light\(indexPath.item)")
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
     
 }

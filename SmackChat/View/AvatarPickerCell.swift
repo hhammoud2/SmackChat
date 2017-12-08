@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum AvatarType {
+    case dark
+    case light
+}
+
 class AvatarPickerCell: UICollectionViewCell {
     //MARK: - Properties
     let avatarImageView: UIImageView = {
@@ -34,5 +39,16 @@ class AvatarPickerCell: UICollectionViewCell {
     //MARK: - Helper functions
     override func layoutSubviews() {
         avatarImageView.pin.all().margin(10)
+    }
+    
+    func configureCell(index: Int, type: AvatarType) {
+        if type == AvatarType.dark {
+            avatarImageView.image = UIImage(named: "dark\(index)")
+            self.layer.backgroundColor = UIColor.lightGray.cgColor
+        }
+        else {
+            avatarImageView.image = UIImage(named: "light\(index)")
+            self.layer.backgroundColor = UIColor.gray.cgColor
+        }
     }
 }

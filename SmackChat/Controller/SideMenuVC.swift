@@ -41,7 +41,7 @@ final class SideMenuVC: UIViewController {
     }()
     
     let avatarImageView: UIImageView = {
-        let imageView = UIImageView()
+        let imageView = CircleImage()
         imageView.image = #imageLiteral(resourceName: "menuProfileIcon")
         
         return imageView
