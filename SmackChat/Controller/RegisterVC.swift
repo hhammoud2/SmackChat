@@ -14,7 +14,7 @@ class RegisterVC: UIViewController {
     
     //Default avatar name and color values
     var avatarName = "profileDefault"
-    var avatarColor = "[0.5, 0.5, 0.5, 1.0]"
+    var avatarColor = "[0.5, 0.5, 0.5, 1]"
     var bgColor: UIColor?
     
     //UI Elements
@@ -31,9 +31,9 @@ class RegisterVC: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("Create Account", for: .normal)
         button.tintColor = .white
-        button.backgroundColor = #colorLiteral(red: 0.3529411765, green: 0.6235294118, blue: 0.7960784314, alpha: 1)
+        button.backgroundColor = smackBlue
         button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
-        button.setTitleColor(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 5
         
         button.addTarget(self, action: #selector(createButtonPressed), for: .touchUpInside)
@@ -44,7 +44,7 @@ class RegisterVC: UIViewController {
     let createAccountLabel: UILabel = {
         let label = UILabel()
         label.text = "Create an account"
-        label.textColor = #colorLiteral(red: 0.2549019608, green: 0.3294117647, blue: 0.7254901961, alpha: 1)
+        label.textColor = smackPurple
         label.textAlignment = .center
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
         
@@ -55,7 +55,7 @@ class RegisterVC: UIViewController {
         let textField = UITextField()
         textField.borderStyle = .none
         textField.font = UIFont(name: "HelveticaNeue", size: 15)
-        textField.textColor = #colorLiteral(red: 0.2549019608, green: 0.3294117647, blue: 0.7254901961, alpha: 1)
+        textField.textColor = smackPurple
         textField.attributedPlaceholder = NSAttributedString(string: "username", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
         return textField
     }()
@@ -64,7 +64,7 @@ class RegisterVC: UIViewController {
         let textField = UITextField()
         textField.borderStyle = .none
         textField.font = UIFont(name: "HelveticaNeue", size: 15)
-        textField.textColor = #colorLiteral(red: 0.2549019608, green: 0.3294117647, blue: 0.7254901961, alpha: 1)
+        textField.textColor = smackPurple
         textField.isSecureTextEntry = true
         textField.attributedPlaceholder = NSAttributedString(string: "password", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
         return textField
@@ -74,28 +74,28 @@ class RegisterVC: UIViewController {
         let textField = UITextField()
         textField.borderStyle = .none
         textField.font = UIFont(name: "HelveticaNeue", size: 15)
-        textField.textColor = #colorLiteral(red: 0.2549019608, green: 0.3294117647, blue: 0.7254901961, alpha: 1)
+        textField.textColor = smackPurple
         textField.attributedPlaceholder = NSAttributedString(string: "email", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
         return textField
     }()
     
     let usernameDividerView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.3568627451, green: 0.6235294118, blue: 0.7960784314, alpha: 1)
+        view.backgroundColor = smackBlue
         
         return view
     }()
     
     let passwordDividerView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.3568627451, green: 0.6235294118, blue: 0.7960784314, alpha: 1)
+        view.backgroundColor = smackBlue
         
         return view
     }()
     
     let emailDividerView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.3568627451, green: 0.6235294118, blue: 0.7960784314, alpha: 1)
+        view.backgroundColor = smackBlue
         
         return view
     }()
@@ -105,7 +105,7 @@ class RegisterVC: UIViewController {
         button.setTitle("Choose avatar", for: .normal)
         button.tintColor = .clear
         button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 12)
-        button.setTitleColor(#colorLiteral(red: 0.3529411765, green: 0.6235294118, blue: 0.7960784314, alpha: 1), for: .normal)
+        button.setTitleColor(smackBlue, for: .normal)
         button.contentVerticalAlignment = .bottom
         
         button.addTarget(self, action: #selector(chooseAvatarButtonPressed), for: .touchUpInside)
@@ -118,7 +118,7 @@ class RegisterVC: UIViewController {
         button.setTitle("Generate background color", for: .normal)
         button.tintColor = .clear
         button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 12)
-        button.setTitleColor(#colorLiteral(red: 0.3529411765, green: 0.6235294118, blue: 0.7960784314, alpha: 1), for: .normal)
+        button.setTitleColor(smackBlue, for: .normal)
         
         button.addTarget(self, action: #selector(backgroundColorButtonPressed), for: .touchUpInside)
         
@@ -136,7 +136,7 @@ class RegisterVC: UIViewController {
     let activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.activityIndicatorViewStyle = .whiteLarge
-        indicator.color = #colorLiteral(red: 0.2549019608, green: 0.3294117647, blue: 0.7254901961, alpha: 1)
+        indicator.color = smackPurple
         return indicator
     }()
 
@@ -227,6 +227,7 @@ class RegisterVC: UIViewController {
         let green = CGFloat(arc4random_uniform(255)) / 255
         let blue = CGFloat(arc4random_uniform(255)) / 255
         bgColor = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+        avatarColor = "[\(red), \(green), \(blue), 1]"
         UIView.animate(withDuration: 0.2) {
             self.avatarImageView.backgroundColor = self.bgColor
         }

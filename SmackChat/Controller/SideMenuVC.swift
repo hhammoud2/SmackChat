@@ -77,6 +77,7 @@ final class SideMenuVC: UIViewController {
         addSubviews()
         channelsTable.delegate = self
         channelsTable.dataSource = self
+        NotificationCenter.default.addObserver(self, selector: #selector(userDataDidChange), name: NOTIF_USER_DATA_DID_CHANGE, object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -102,6 +103,19 @@ final class SideMenuVC: UIViewController {
         self.view.addSubview(avatarImageView)
         self.view.addSubview(loginButton)
         self.view.addSubview(channelsTable)
+    }
+    
+    @objc func userDataDidChange(_ notif: Notification) {
+        if AuthService.instance.isLoggedIn {
+            loginButton.setTitle(UserDataService.instance.name, for: .normal)
+            avatarImageView.image = UIImage(named: UserDataService.instance.avatarName)
+            avatarImageView.backgroundColor = UserDataService.instance.returnUIColor(components: UserDataService.instance.avatarColor)
+        }
+        else {
+            loginButton.setTitle("Login", for: .normal)
+            avatarImageView.image = UIImage(named: "menuProfileIcon")
+            avatarImageView.backgroundColor = .clear
+        }
     }
     //MARK: - Button functions
     @objc func createChannel(_ sender: Any) {

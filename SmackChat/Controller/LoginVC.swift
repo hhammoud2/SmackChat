@@ -27,9 +27,9 @@ final class LoginVC: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("Login", for: .normal)
         button.tintColor = .white
-        button.backgroundColor = #colorLiteral(red: 0.3529411765, green: 0.6235294118, blue: 0.7960784314, alpha: 1)
+        button.backgroundColor = smackBlue
         button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
-        button.setTitleColor(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 5
         
         button.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
@@ -42,7 +42,7 @@ final class LoginVC: UIViewController {
         button.setTitle("Don't have an account? Sign up here", for: .normal)
         button.tintColor = .clear
         button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 12)
-        button.setTitleColor(#colorLiteral(red: 0.3529411765, green: 0.6235294118, blue: 0.7960784314, alpha: 1), for: .normal)
+        button.setTitleColor(smackBlue, for: .normal)
 //        button.titleLabel?.textAlignment = .center
 
         button.addTarget(self, action: #selector(registerButtonPressed), for: .touchUpInside)
@@ -61,7 +61,7 @@ final class LoginVC: UIViewController {
     let smackLabel: UILabel = {
         let label = UILabel()
         label.text = "SmackChat"
-        label.textColor = #colorLiteral(red: 0.2549019608, green: 0.3294117647, blue: 0.7254901961, alpha: 1)
+        label.textColor = smackPurple
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
         
         return label
@@ -78,7 +78,7 @@ final class LoginVC: UIViewController {
         let textField = UITextField()
         textField.borderStyle = .none
         textField.font = UIFont(name: "HelveticaNeue", size: 17)
-        textField.textColor = #colorLiteral(red: 0.2549019608, green: 0.3294117647, blue: 0.7254901961, alpha: 1)
+        textField.textColor = smackPurple
         textField.attributedPlaceholder = NSAttributedString(string: "username", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
         return textField
     }()
@@ -87,7 +87,7 @@ final class LoginVC: UIViewController {
         let textField = UITextField()
         textField.borderStyle = .none
         textField.font = UIFont(name: "HelveticaNeue", size: 17)
-        textField.textColor = #colorLiteral(red: 0.2549019608, green: 0.3294117647, blue: 0.7254901961, alpha: 1)
+        textField.textColor = smackPurple
         textField.isSecureTextEntry = true
         textField.attributedPlaceholder = NSAttributedString(string: "password", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
 
@@ -96,14 +96,14 @@ final class LoginVC: UIViewController {
     
     let usernameDividerView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.3568627451, green: 0.6235294118, blue: 0.7960784314, alpha: 1)
+        view.backgroundColor = smackBlue
         
         return view
     }()
     
     let passwordDividerView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.3568627451, green: 0.6235294118, blue: 0.7960784314, alpha: 1)
+        view.backgroundColor = smackBlue
         
         return view
     }()

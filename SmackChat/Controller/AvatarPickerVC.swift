@@ -19,13 +19,13 @@ class AvatarPickerVC: UIViewController {
         button.setTitle("", for: .normal)
         button.setImage(UIImage(named: "smackBack"), for: .normal)
         button.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
-        button.tintColor = #colorLiteral(red: 0.2549019608, green: 0.3294117647, blue: 0.7254901961, alpha: 1)
+        button.tintColor = smackPurple
         return button
     }()
     
     let darkLightSegmentedControl: UISegmentedControl = {
         let segmentControl = UISegmentedControl(items: ["Dark", "Light"])
-        segmentControl.tintColor = #colorLiteral(red: 0.3568627451, green: 0.6235294118, blue: 0.7960784314, alpha: 1)
+        segmentControl.tintColor = smackBlue
         segmentControl.setTitle("Dark", forSegmentAt: 0)
         segmentControl.setTitle("Light", forSegmentAt: 1)
         segmentControl.selectedSegmentIndex = 0

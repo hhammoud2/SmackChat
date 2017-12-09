@@ -23,6 +23,7 @@
 		F0B087DC1FDB0C4A0041B307 /* AvatarPickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B087DB1FDB0C4A0041B307 /* AvatarPickerVC.swift */; };
 		F0B087DE1FDB11E70041B307 /* AvatarPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B087DD1FDB11E70041B307 /* AvatarPickerCell.swift */; };
 		F0B087E01FDB43220041B307 /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B087DF1FDB43220041B307 /* CircleImage.swift */; };
+		F0B087E21FDB5B0C0041B307 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B087E11FDB5B0C0041B307 /* ProfileVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		F0B087DB1FDB0C4A0041B307 /* AvatarPickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPickerVC.swift; sourceTree = "<group>"; };
 		F0B087DD1FDB11E70041B307 /* AvatarPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPickerCell.swift; sourceTree = "<group>"; };
 		F0B087DF1FDB43220041B307 /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
+		F0B087E11FDB5B0C0041B307 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				F048B3B21FD86B13006BB73B /* LoginVC.swift */,
 				F00ADAC11FD8B43500359DC0 /* RegisterVC.swift */,
 				F0B087DB1FDB0C4A0041B307 /* AvatarPickerVC.swift */,
+				F0B087E11FDB5B0C0041B307 /* ProfileVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 			files = (
 				F051B9661FD5FBF70021B873 /* ChatVC.swift in Sources */,
 				F051B9641FD5FBF70021B873 /* AppDelegate.swift in Sources */,
+				F0B087E21FDB5B0C0041B307 /* ProfileVC.swift in Sources */,
 				F0B087DE1FDB11E70041B307 /* AvatarPickerCell.swift in Sources */,
 				F0B087E01FDB43220041B307 /* CircleImage.swift in Sources */,
 				F0B087DC1FDB0C4A0041B307 /* AvatarPickerVC.swift in Sources */,
