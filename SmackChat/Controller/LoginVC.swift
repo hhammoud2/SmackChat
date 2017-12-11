@@ -12,7 +12,7 @@ import SideMenu
 
 final class LoginVC: UIViewController {
     
-    //MARK: - Properties
+    // MARK: - Properties
     
     let cancelButton: UIButton = {
         let button = UIButton(type: .system)
@@ -108,7 +108,7 @@ final class LoginVC: UIViewController {
         return view
     }()
     
-    //MARK: - Life Cycle
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,7 +130,7 @@ final class LoginVC: UIViewController {
         registerButton.pin.height(20).width(250).below(of: loginButton, aligned: .center)
     }
     
-    //MARK: - Button functions
+    // MARK: - Button functions
     
     @objc func cancelButtonPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -145,10 +145,15 @@ final class LoginVC: UIViewController {
     
     @objc func registerButtonPressed(_ sender: Any) {
         let registerVC = RegisterVC()
-        present(registerVC, animated: true, completion: nil)
+        registerVC.modalPresentationStyle = .overFullScreen
+        presentingViewController?.presentSecondaryDetail(registerVC)
+//        let presentingVC = presentingViewController
+//        dismiss(animated: false) {
+//            presentingVC?.present(registerVC, animated: true, completion: nil)
+//        }
     }
     
-    //MARK: - Helper functions
+    // MARK: - Helper functions
     func addSubviews() {
         self.view.addSubview(cancelButton)
         self.view.addSubview(loginButton)

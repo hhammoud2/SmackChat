@@ -11,7 +11,7 @@ import PinLayout
 
 final class SideMenuVC: UIViewController {
 
-    //MARK: - Properties
+    // MARK: - Properties
     let smackLabel: UILabel = {
         let label = UILabel()
         label.text = "Smack"
@@ -54,7 +54,6 @@ final class SideMenuVC: UIViewController {
         button.tintColor = .white
         button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 19)
         button.addTarget(self, action: #selector(promptLogin), for: .touchUpInside)
-        
         return button
     }()
     
@@ -70,7 +69,7 @@ final class SideMenuVC: UIViewController {
         return table
     }()
     
-    //MARK: - Life Cycle
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -85,11 +84,11 @@ final class SideMenuVC: UIViewController {
         channelsLabel.pin.below(of: smackLabel).left().width(190).height(30).marginHorizontal(15).marginVertical(25)
         addChannelButton.pin.right().size(30).vCenter(to: channelsLabel.edge.vCenter).marginHorizontal(30)
         avatarImageView.pin.bottomLeft().size(90).margin(20)
-        loginButton.pin.after(of: avatarImageView).vCenter(to: avatarImageView.edge.vCenter).marginHorizontal(15).width(70).height(30)
+        loginButton.pin.after(of: avatarImageView).vCenter(to: avatarImageView.edge.vCenter).marginHorizontal(15).right(to: avatarImageView.edge.right).height(30).sizeToFit(.widthFlexible)
         channelsTable.pin.below(of: channelsLabel).above(of: avatarImageView).left().right().marginTop(15).marginBottom(10)
     }
     
-    //MARK: - Helper functions
+    // MARK: - Helper functions
     func setupView() {
         self.view.backgroundColor = .white
         self.view = GradientView()
@@ -110,25 +109,36 @@ final class SideMenuVC: UIViewController {
             loginButton.setTitle(UserDataService.instance.name, for: .normal)
             avatarImageView.image = UIImage(named: UserDataService.instance.avatarName)
             avatarImageView.backgroundColor = UserDataService.instance.returnUIColor(components: UserDataService.instance.avatarColor)
+            loginButton.pin.sizeToFit(.widthFlexible)
         }
         else {
             loginButton.setTitle("Login", for: .normal)
             avatarImageView.image = UIImage(named: "menuProfileIcon")
             avatarImageView.backgroundColor = .clear
+            loginButton.pin.sizeToFit(.widthFlexible)
+
         }
     }
-    //MARK: - Button functions
+    // MARK: - Button functions
     @objc func createChannel(_ sender: Any) {
         
     }
     
-    @objc func promptLogin(_ sender: Any) {
-        let loginVC: LoginVC = LoginVC()
-        present(loginVC, animated: true, completion: nil)
+    @objc func promptLogin(_ sender: UIButton) {
+        if AuthService.instance.isLoggedIn {
+            let profileVC: ProfileVC = ProfileVC()
+            profileVC.modalPresentationStyle = .custom
+            present(profileVC, animated: true, completion: nil)
+        }
+        else {
+            let loginVC: LoginVC = LoginVC()
+            loginVC.modalPresentationStyle = .overFullScreen
+            present(loginVC, animated: true, completion: nil)
+        }
     }
 }
 
-//MARK: - Tableview Extension
+// MARK: - Tableview Extension
 extension SideMenuVC: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {

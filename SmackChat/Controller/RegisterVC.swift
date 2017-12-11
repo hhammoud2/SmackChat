@@ -10,14 +10,14 @@ import UIKit
 
 class RegisterVC: UIViewController {
 
-    //MARK: - Properties
+    // MARK: - Properties
     
-    //Default avatar name and color values
+    // Default avatar name and color values
     var avatarName = "profileDefault"
     var avatarColor = "[0.5, 0.5, 0.5, 1]"
     var bgColor: UIColor?
     
-    //UI Elements
+    // UI Elements
     let cancelButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("", for: .normal)
@@ -140,7 +140,7 @@ class RegisterVC: UIViewController {
         return indicator
     }()
 
-    //MARK: - Life Cycle
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -176,10 +176,10 @@ class RegisterVC: UIViewController {
         activityIndicator.pin.hCenter().vCenter(-100).size(30)
     }
     
-    //MARK: - Button functions
+    // MARK: - Button functions
     
     @objc func cancelButtonPressed(_ sender: Any) {
-        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     @objc func createButtonPressed(_ sender: Any) {
@@ -206,7 +206,7 @@ class RegisterVC: UIViewController {
                             if success {
                                 self.activityIndicator.isHidden = true
                                 self.activityIndicator.stopAnimating()
-                                self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+                                self.dismiss(animated: true, completion: nil)
                                 NotificationCenter.default.post(name: NOTIF_USER_DATA_DID_CHANGE, object: nil)
                                 //Update UI, views, etc.
                             }
@@ -236,7 +236,7 @@ class RegisterVC: UIViewController {
     @objc func handleTap() {
         view.endEditing(true)
     }
-    //MARK: - Helper functions
+    // MARK: - Helper functions
     
     func addSubviews() {
         self.view.addSubview(cancelButton)

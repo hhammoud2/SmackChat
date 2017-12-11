@@ -10,7 +10,7 @@ import UIKit
 
 class AvatarPickerVC: UIViewController {
 
-    //MARK: - Properties
+    // MARK: - Properties
     
     var avatarType = AvatarType.dark
     
@@ -47,7 +47,7 @@ class AvatarPickerVC: UIViewController {
         
         return collection
     }()
-    //MARK: - Life Cycle
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,14 +64,14 @@ class AvatarPickerVC: UIViewController {
         avatarImageCollection.pin.left().right().bottom().below(of: darkLightSegmentedControl).marginTop(20)
     }
     
-    //MARK: Helper functions
+    // MARK: Helper functions
     func addSubviews() {
         self.view.addSubview(backButton)
         self.view.addSubview(darkLightSegmentedControl)
         self.view.addSubview(avatarImageCollection)
     }
     
-    //MARK: Button functions
+    // MARK: Button functions
     @objc func backButtonPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }

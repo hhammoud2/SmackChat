@@ -12,7 +12,7 @@ import PinLayout
 
 final class ChatVC: UIViewController {
 
-    //MARK: - Properties
+    // MARK: - Properties
     let topMenuBar: UIView = {
         let view = GradientView()
         return view
@@ -36,7 +36,7 @@ final class ChatVC: UIViewController {
         return button
     }()
     
-    //MARK: - Life Cycle
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,11 +54,11 @@ final class ChatVC: UIViewController {
     }
 
 
-    //MARK: - Button functions
+    // MARK: - Button functions
     @objc func openSideMenu(_ sender: Any) {
         present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
     }
-    //MARK: - Helper Functions
+    // MARK: - Helper Functions
     
     func setupMenuBar() {
         self.view.addSubview(topMenuBar)
@@ -78,8 +78,10 @@ final class ChatVC: UIViewController {
         //Customization
         SideMenuManager.default.menuWidth = self.view.frame.size.width - 60
         SideMenuManager.default.menuFadeStatusBar = false
+//        SideMenuManager.default.menuEnableSwipeGestures = false
+        SideMenuManager.default.menuDismissOnPush = false
     }
 }
 
-//MARK: - Extensions
+// MARK: - Extensions
 
