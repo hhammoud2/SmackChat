@@ -74,12 +74,12 @@ final class LoginVC: UIViewController {
         return view
     }()
     
-    let usernameTextField: UITextField = {
+    let emailTextField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .none
         textField.font = UIFont(name: "HelveticaNeue", size: 17)
         textField.textColor = smackPurple
-        textField.attributedPlaceholder = NSAttributedString(string: "username", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
+        textField.attributedPlaceholder = NSAttributedString(string: "email", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
         return textField
     }()
     
@@ -94,7 +94,7 @@ final class LoginVC: UIViewController {
         return textField
     }()
     
-    let usernameDividerView: UIView = {
+    let emailDividerView: UIView = {
         let view = UIView()
         view.backgroundColor = smackBlue
         
@@ -108,12 +108,25 @@ final class LoginVC: UIViewController {
         return view
     }()
     
+    let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.activityIndicatorViewStyle = .whiteLarge
+        indicator.color = smackPurple
+        indicator.isHidden = true
+        
+        return indicator
+    }()
+
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        passwordTextField.delegate = self
         addSubviews()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        view.addGestureRecognizer(tap)
         // Do any additional setup after loading the view.
     }
     
@@ -122,12 +135,14 @@ final class LoginVC: UIViewController {
         titleView.pin.height(48).width(221).top(75).hCenter()
         logoImage.pin.width(56).height(48).left().marginRight(12).vCenter()
         smackLabel.pin.width(150).height(30).right().marginLeft(12).vCenter()
-        usernameTextField.pin.width(250).height(30).below(of: titleView).hCenter().marginTop(40).marginBottom(5)
-        usernameDividerView.pin.width(of: usernameTextField).height(2).below(of: usernameTextField).hCenter()
-        passwordTextField.pin.below(of: usernameDividerView).marginTop(15).width(of: usernameTextField).height(of: usernameTextField).hCenter().marginBottom(5)
-        passwordDividerView.pin.width(of: usernameTextField).height(2).below(of: passwordTextField).hCenter()
+        emailTextField.pin.width(250).height(30).below(of: titleView).hCenter().marginTop(40).marginBottom(5)
+        emailDividerView.pin.width(of: emailTextField).height(2).below(of: emailTextField).hCenter()
+        passwordTextField.pin.below(of: emailDividerView).marginTop(15).width(of: emailTextField).height(of: emailTextField).hCenter().marginBottom(5)
+        passwordDividerView.pin.width(of: emailTextField).height(2).below(of: passwordTextField).hCenter()
         loginButton.pin.height(50).width(250).below(of: passwordDividerView).hCenter().marginTop(40)
         registerButton.pin.height(20).width(250).below(of: loginButton, aligned: .center)
+        activityIndicator.pin.hCenter().vCenter(-100).size(30)
+
     }
     
     // MARK: - Button functions
@@ -137,10 +152,28 @@ final class LoginVC: UIViewController {
     }
     
     @objc func loginButtonPressed(_ sender: Any) {
-        print("Login!")
-//        let presentingVC = presentingViewController as? SideMenu.UISideMenuNavigationController
-//        let sideMenuVC = presentingVC?.topViewController as? SideMenuVC
-        dismiss(animated: true, completion: nil)
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        
+        guard let email = emailTextField.text, emailTextField.text != "" else {
+            return
+        }
+        guard let password = passwordTextField.text, passwordTextField.text != "" else {
+            return
+        }
+        
+        AuthService.instance.loginUser(email: email, password: password) { (success) in
+            if success {
+                AuthService.instance.findUserByEmail(completion: { (success) in
+                    if success {
+                        NotificationCenter.default.post(name: NOTIF_USER_DATA_DID_CHANGE, object: nil)
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                })
+            }
+        }
     }
     
     @objc func registerButtonPressed(_ sender: Any) {
@@ -153,19 +186,37 @@ final class LoginVC: UIViewController {
 //        }
     }
     
+    @objc func handleTap() {
+        view.endEditing(true)
+    }
+    
     // MARK: - Helper functions
     func addSubviews() {
         self.view.addSubview(cancelButton)
         self.view.addSubview(loginButton)
         self.view.addSubview(registerButton)
         self.view.addSubview(titleView)
-        self.view.addSubview(usernameTextField)
-        self.view.addSubview(usernameDividerView)
+        self.view.addSubview(emailTextField)
+        self.view.addSubview(emailDividerView)
         self.view.addSubview(passwordTextField)
         self.view.addSubview(passwordDividerView)
+        self.view.addSubview(activityIndicator)
         
         titleView.addSubview(logoImage)
         titleView.addSubview(smackLabel)
         
+    }
+}
+
+extension LoginVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("entered")
+        performAction()
+        return true
+
+    }
+    
+    func performAction() {
+        loginButtonPressed(loginButton)
     }
 }

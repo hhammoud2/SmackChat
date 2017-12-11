@@ -79,6 +79,10 @@ final class SideMenuVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(userDataDidChange), name: NOTIF_USER_DATA_DID_CHANGE, object: nil)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        setupUserInfo()
+    }
+    
     override func viewDidLayoutSubviews() {
         smackLabel.pin.top().left().width(75).height(30).marginHorizontal(15).marginVertical(45)
         channelsLabel.pin.below(of: smackLabel).left().width(190).height(30).marginHorizontal(15).marginVertical(25)
@@ -104,7 +108,7 @@ final class SideMenuVC: UIViewController {
         self.view.addSubview(channelsTable)
     }
     
-    @objc func userDataDidChange(_ notif: Notification) {
+    func setupUserInfo() {
         if AuthService.instance.isLoggedIn {
             loginButton.setTitle(UserDataService.instance.name, for: .normal)
             avatarImageView.image = UIImage(named: UserDataService.instance.avatarName)
@@ -116,8 +120,11 @@ final class SideMenuVC: UIViewController {
             avatarImageView.image = UIImage(named: "menuProfileIcon")
             avatarImageView.backgroundColor = .clear
             loginButton.pin.sizeToFit(.widthFlexible)
-
         }
+    }
+    
+    @objc func userDataDidChange(_ notif: Notification) {
+        setupUserInfo()
     }
     // MARK: - Button functions
     @objc func createChannel(_ sender: Any) {

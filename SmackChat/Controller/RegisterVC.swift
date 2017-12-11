@@ -144,6 +144,7 @@ class RegisterVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        passwordTextField.delegate = self
         addSubviews()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
@@ -254,4 +255,20 @@ class RegisterVC: UIViewController {
         self.view.addSubview(activityIndicator)
     }
 
+}
+
+extension RegisterVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == passwordTextField {
+            performAction()
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    func performAction() {
+        createButtonPressed(createAccountButton)
+    }
 }

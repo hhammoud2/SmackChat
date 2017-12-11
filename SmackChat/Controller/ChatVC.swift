@@ -44,6 +44,12 @@ final class ChatVC: UIViewController {
         self.view.backgroundColor = .white
         setupMenuBar()
         setupSideMenu()
+        
+        if AuthService.instance.isLoggedIn {
+            AuthService.instance.findUserByEmail(completion: { (success) in
+                NotificationCenter.default.post(name: NOTIF_USER_DATA_DID_CHANGE, object: nil)
+            })
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -81,6 +87,7 @@ final class ChatVC: UIViewController {
 //        SideMenuManager.default.menuEnableSwipeGestures = false
         SideMenuManager.default.menuDismissOnPush = false
     }
+    
 }
 
 // MARK: - Extensions
