@@ -15,7 +15,7 @@ final class ChannelCell: UITableViewCell {
         let label = UILabel()
         label.text = "#general"
         label.textColor = .white
-        label.font = UIFont(name: "HelveticaNeue", size: 14)
+        label.font = UIFont(name: "HelveticaNeue", size: 16)
         label.textAlignment = .left
         
         return label

@@ -57,6 +57,8 @@ class RegisterVC: UIViewController {
         textField.font = UIFont(name: "HelveticaNeue", size: 15)
         textField.textColor = smackPurple
         textField.attributedPlaceholder = NSAttributedString(string: "username", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
+        textField.autocapitalizationType = UITextAutocapitalizationType.none
+
         return textField
     }()
     
@@ -67,6 +69,8 @@ class RegisterVC: UIViewController {
         textField.textColor = smackPurple
         textField.isSecureTextEntry = true
         textField.attributedPlaceholder = NSAttributedString(string: "password", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
+        textField.autocapitalizationType = UITextAutocapitalizationType.none
+
         return textField
     }()
     
@@ -76,6 +80,8 @@ class RegisterVC: UIViewController {
         textField.font = UIFont(name: "HelveticaNeue", size: 15)
         textField.textColor = smackPurple
         textField.attributedPlaceholder = NSAttributedString(string: "email", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
+        textField.autocapitalizationType = UITextAutocapitalizationType.none
+
         return textField
     }()
     

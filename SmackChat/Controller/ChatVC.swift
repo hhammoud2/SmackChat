@@ -37,6 +37,16 @@ final class ChatVC: UIViewController {
         return button
     }()
     
+    let messageTextField: UITextField = {
+        let textfield = UITextField()
+        textfield.placeholder = "Message: #\(MessageService.instance.selectedChannel?.name ?? "")"
+        textfield.borderStyle = .none
+        textfield.font = UIFont(name: "HelveticaNeue", size: 12)
+        textfield.textColor = .black
+        textfield.autocapitalizationType = UITextAutocapitalizationType.sentences
+        
+        return textfield
+    }()
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -45,6 +55,9 @@ final class ChatVC: UIViewController {
         self.view.backgroundColor = .white
         setupMenuBar()
         setupSideMenu()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(userDataDidChange), name: NOTIF_USER_DATA_DID_CHANGE, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(channelSelected), name: NOTIF_CHANNEL_SELECTED, object: nil)
         
         if AuthService.instance.isLoggedIn {
             AuthService.instance.findUserByEmail(completion: { (success) in
@@ -58,6 +71,7 @@ final class ChatVC: UIViewController {
         topMenuBar.pin.top().left().right().height(75)
         sideMenuButton.pin.width(24).height(20).bottomLeft().margin(8)
         smackChatLabel.pin.hCenter().vCenter(to: sideMenuButton.edge.vCenter).width(150).height(25)
+        messageTextField.pin.bottom().left().right()
     }
 
 
@@ -65,6 +79,15 @@ final class ChatVC: UIViewController {
     
     @objc func openSideMenu(_ sender: Any) {
         present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
+    }
+    
+    @objc func userDataDidChange(_ notif: Notification) {
+        if AuthService.instance.isLoggedIn {
+            onLoginGetMessages()
+        }
+        else {
+            smackChatLabel.text = "Please Log In"
+        }
     }
     // MARK: - Helper Functions
     
@@ -89,6 +112,38 @@ final class ChatVC: UIViewController {
         SideMenuManager.default.menuDismissOnPush = false
     }
     
+    func onLoginGetMessages() {
+        MessageService.instance.getChannels { (success) in
+            if success {
+                if MessageService.instance.channels.count > 0 {
+                    MessageService.instance.selectedChannel = MessageService.instance.channels[0]
+                    self.updateWithChannel()
+                }
+                else {
+                    self.smackChatLabel.text = "No channels yet!"
+                }
+            }
+        }
+    }
+    
+    func getMessages() {
+        guard let channelID = MessageService.instance.selectedChannel?._id else {
+            return
+        }
+        MessageService.instance.getAllMessages(forChannelID: channelID) { (success) in
+            
+        }
+    }
+    
+    @objc func channelSelected(_ notif: Notification) {
+        updateWithChannel()
+    }
+    
+    func updateWithChannel() {
+        let channelName = MessageService.instance.selectedChannel?.name ?? ""
+        smackChatLabel.text = "#\(channelName)"
+        getMessages()
+    }
 }
 
 // MARK: - Extensions

@@ -58,6 +58,8 @@ class AddChannelVC: UIViewController {
         textField.font = UIFont(name: "HelveticaNeue", size: 17)
         textField.textColor = smackPurple
         textField.attributedPlaceholder = NSAttributedString(string: "name", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
+        textField.autocapitalizationType = UITextAutocapitalizationType.none
+
         return textField
     }()
     
@@ -67,7 +69,8 @@ class AddChannelVC: UIViewController {
         textField.font = UIFont(name: "HelveticaNeue", size: 17)
         textField.textColor = smackPurple
         textField.attributedPlaceholder = NSAttributedString(string: "description", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
-        
+        textField.autocapitalizationType = UITextAutocapitalizationType.none
+
         return textField
     }()
     
@@ -110,7 +113,18 @@ class AddChannelVC: UIViewController {
     // MARK: - Button functions
     
     @objc func createChannelButtonPressed(_ sender: Any) {
-
+        guard let channelName = channelNameTextField.text, channelNameTextField.text != "" else {
+            return
+        }
+        guard let channelDescription = channelDescriptionTextField.text else {
+             return
+        }
+        
+        SocketService.instance.addChannel(channelName: channelName, channelDescription: channelDescription) { (success) in
+            if success {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
     
     @objc func cancelPressed(_ sender: Any) {

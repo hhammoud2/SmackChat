@@ -63,7 +63,7 @@ final class SideMenuVC: UIViewController {
         table.backgroundColor = .clear
         table.separatorStyle = .none
         table.register(ChannelCell.self, forCellReuseIdentifier: "channel cell")
-        table.rowHeight = 25
+        table.rowHeight = 40
         table.showsVerticalScrollIndicator = false
         table.showsHorizontalScrollIndicator = false
         
@@ -79,6 +79,13 @@ final class SideMenuVC: UIViewController {
         channelsTable.delegate = self
         channelsTable.dataSource = self
         NotificationCenter.default.addObserver(self, selector: #selector(userDataDidChange), name: NOTIF_USER_DATA_DID_CHANGE, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(channelsLoaded), name: NOTIF_CHANNELS_LOADED, object: nil)
+        
+        SocketService.instance.getNewChannel { (success) in
+            if success {
+                self.channelsTable.reloadData()
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -131,6 +138,10 @@ final class SideMenuVC: UIViewController {
         setupUserInfo()
     }
     
+    @objc func channelsLoaded(_ notif: Notification) {
+        channelsTable.reloadData()
+    }
+    
     // MARK: - Button functions
     
     @objc func createChannel(_ sender: Any) {
@@ -178,5 +189,13 @@ extension SideMenuVC: UITableViewDelegate, UITableViewDataSource {
         else {
             return ChannelCell()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let channel = MessageService.instance.channels[indexPath.row]
+        MessageService.instance.selectedChannel = channel
+        NotificationCenter.default.post(name: NOTIF_CHANNEL_SELECTED, object: nil)
+        
+        self.dismiss(animated: true, completion: nil)
     }
 }

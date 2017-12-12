@@ -80,6 +80,7 @@ final class LoginVC: UIViewController {
         textField.font = UIFont(name: "HelveticaNeue", size: 17)
         textField.textColor = smackPurple
         textField.attributedPlaceholder = NSAttributedString(string: "email", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
+        textField.autocapitalizationType = UITextAutocapitalizationType.none
         return textField
     }()
     
@@ -90,6 +91,7 @@ final class LoginVC: UIViewController {
         textField.textColor = smackPurple
         textField.isSecureTextEntry = true
         textField.attributedPlaceholder = NSAttributedString(string: "password", attributes: [NSAttributedStringKey.foregroundColor: smackPurplePlaceHolder])
+        textField.autocapitalizationType = UITextAutocapitalizationType.none
 
         return textField
     }()
@@ -170,11 +172,6 @@ final class LoginVC: UIViewController {
                         self.activityIndicator.isHidden = true
                         self.activityIndicator.stopAnimating()
                         self.dismiss(animated: true, completion: nil)
-                        MessageService.instance.getChannels(completion: { (success) in
-                            if success {
-                                print(MessageService.instance.channels)
-                            }
-                        })
                     }
                 })
             }

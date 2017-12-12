@@ -21,6 +21,8 @@
 		F051B96B1FD5FBF80021B873 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F051B96A1FD5FBF80021B873 /* Assets.xcassets */; };
 		F051B96E1FD5FBF80021B873 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F051B96C1FD5FBF80021B873 /* LaunchScreen.storyboard */; };
 		F0A2EA731FE04896009951C8 /* AddChannelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A2EA721FE04896009951C8 /* AddChannelVC.swift */; };
+		F0A2EA751FE05DDF009951C8 /* SocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A2EA741FE05DDF009951C8 /* SocketService.swift */; };
+		F0A2EA781FE09127009951C8 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A2EA771FE09127009951C8 /* Message.swift */; };
 		F0AD0B171FDEFBB30072FBA6 /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AD0B161FDEFBB30072FBA6 /* UIViewControllerExt.swift */; };
 		F0AD0B191FDF343A0072FBA6 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AD0B181FDF343A0072FBA6 /* MessageService.swift */; };
 		F0AD0B1B1FDF34840072FBA6 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AD0B1A1FDF34840072FBA6 /* Channel.swift */; };
@@ -49,6 +51,8 @@
 		F051B96D1FD5FBF80021B873 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F051B96F1FD5FBF80021B873 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0A2EA721FE04896009951C8 /* AddChannelVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChannelVC.swift; sourceTree = "<group>"; };
+		F0A2EA741FE05DDF009951C8 /* SocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SocketService.swift; path = "/Users/hammoudhammoud/Desktop/iOS Dev/SmackChat/SmackChat/Services/SocketService.swift"; sourceTree = "<absolute>"; };
+		F0A2EA771FE09127009951C8 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		F0AD0B161FDEFBB30072FBA6 /* UIViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
 		F0AD0B181FDF343A0072FBA6 /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
 		F0AD0B1A1FDF34840072FBA6 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = SOURCE_ROOT; };
@@ -91,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				F0AD0B1A1FDF34840072FBA6 /* Channel.swift */,
+				F0A2EA771FE09127009951C8 /* Message.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -123,6 +128,7 @@
 		F04953BF1FD9C8E9009EE161 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				F0A2EA741FE05DDF009951C8 /* SocketService.swift */,
 				F04953C21FD9C928009EE161 /* AuthService.swift */,
 				F04953C71FD9EF01009EE161 /* UserDataService.swift */,
 				F0AD0B181FDF343A0072FBA6 /* MessageService.swift */,
@@ -159,18 +165,26 @@
 		F051B9621FD5FBF70021B873 /* SmackChat */ = {
 			isa = PBXGroup;
 			children = (
+				F051B9631FD5FBF70021B873 /* AppDelegate.swift */,
 				F0AD0B151FDEFB900072FBA6 /* Extensions */,
 				F04953C41FD9C9A4009EE161 /* Utilities */,
 				F04953BF1FD9C8E9009EE161 /* Services */,
 				F04369411FD70CA60074CC11 /* Model */,
 				F04369421FD70CAC0074CC11 /* View */,
 				F04369431FD70CB00074CC11 /* Controller */,
-				F051B9631FD5FBF70021B873 /* AppDelegate.swift */,
-				F051B96A1FD5FBF80021B873 /* Assets.xcassets */,
-				F051B96C1FD5FBF80021B873 /* LaunchScreen.storyboard */,
-				F051B96F1FD5FBF80021B873 /* Info.plist */,
+				F0A2EA761FE08D3C009951C8 /* Resources */,
 			);
 			path = SmackChat;
+			sourceTree = "<group>";
+		};
+		F0A2EA761FE08D3C009951C8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F051B96F1FD5FBF80021B873 /* Info.plist */,
+				F051B96A1FD5FBF80021B873 /* Assets.xcassets */,
+				F051B96C1FD5FBF80021B873 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		F0AD0B151FDEFB900072FBA6 /* Extensions */ = {
@@ -336,7 +350,9 @@
 				F04953C81FD9EF01009EE161 /* UserDataService.swift in Sources */,
 				F04369401FD706A40074CC11 /* SideMenuVC.swift in Sources */,
 				F048B3B11FD85BB3006BB73B /* ChannelCell.swift in Sources */,
+				F0A2EA781FE09127009951C8 /* Message.swift in Sources */,
 				F04953C61FD9C9AF009EE161 /* Constants.swift in Sources */,
+				F0A2EA751FE05DDF009951C8 /* SocketService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,7 +483,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = SmackChat/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/SmackChat/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hammoudhammoud.SmackChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -482,7 +498,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = SmackChat/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/SmackChat/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hammoudhammoud.SmackChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
