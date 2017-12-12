@@ -25,14 +25,28 @@ class MessageService {
                 do {
                     if let json = try JSON(data: data).array {
                         for item in json {
+                            
                             let name = item["name"].stringValue
                             let channelDescription = item["description"].stringValue
                             let id = item["_id"].stringValue
+                            // Unncessary value, generally ignored
+                            let v = item["__v"].intValue
+                            
+                            let channel = Channel(_id: id, name: name, description: channelDescription, __v: v)
+                            self.channels.append(channel)
                         }
                     }
                 } catch {
                     print(error)
                 }
+                completion(true)
+                // Alternate method for parsing JSON using Decodable protocol for Channel
+//                do {
+//                    self.channels = try JSONDecoder().decode([Channel].self, from: data)
+//                } catch {
+//                    print(error)
+//                }
+//                completion(true)
             }
             else {
                 completion(false)
