@@ -170,6 +170,11 @@ final class LoginVC: UIViewController {
                         self.activityIndicator.isHidden = true
                         self.activityIndicator.stopAnimating()
                         self.dismiss(animated: true, completion: nil)
+                        MessageService.instance.getChannels(completion: { (success) in
+                            if success {
+                                print(MessageService.instance.channels)
+                            }
+                        })
                     }
                 })
             }

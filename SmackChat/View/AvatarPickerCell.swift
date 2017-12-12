@@ -14,7 +14,8 @@ enum AvatarType {
 }
 
 class AvatarPickerCell: UICollectionViewCell {
-    //MARK: - Properties
+    // MARK: - Properties
+    
     let avatarImageView: UIImageView = {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "dark11")
@@ -22,7 +23,8 @@ class AvatarPickerCell: UICollectionViewCell {
         return image
     }()
     
-    //MARK: - Initializers
+    // MARK: - Initializers
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.layer.backgroundColor = UIColor.lightGray.cgColor
@@ -36,7 +38,8 @@ class AvatarPickerCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    //MARK: - Helper functions
+    // MARK: - Helper functions
+    
     override func layoutSubviews() {
         avatarImageView.pin.all().margin(10)
     }

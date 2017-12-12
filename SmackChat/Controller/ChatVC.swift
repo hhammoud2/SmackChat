@@ -13,6 +13,7 @@ import PinLayout
 final class ChatVC: UIViewController {
 
     // MARK: - Properties
+    
     let topMenuBar: UIView = {
         let view = GradientView()
         return view
@@ -53,7 +54,7 @@ final class ChatVC: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        //Menubar layout
+        // Menubar layout
         topMenuBar.pin.top().left().right().height(75)
         sideMenuButton.pin.width(24).height(20).bottomLeft().margin(8)
         smackChatLabel.pin.hCenter().vCenter(to: sideMenuButton.edge.vCenter).width(150).height(25)
@@ -61,6 +62,7 @@ final class ChatVC: UIViewController {
 
 
     // MARK: - Button functions
+    
     @objc func openSideMenu(_ sender: Any) {
         present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
     }
@@ -84,7 +86,6 @@ final class ChatVC: UIViewController {
         //Customization
         SideMenuManager.default.menuWidth = self.view.frame.size.width - 60
         SideMenuManager.default.menuFadeStatusBar = false
-//        SideMenuManager.default.menuEnableSwipeGestures = false
         SideMenuManager.default.menuDismissOnPush = false
     }
     

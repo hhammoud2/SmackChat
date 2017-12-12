@@ -12,6 +12,7 @@ import PinLayout
 final class SideMenuVC: UIViewController {
 
     // MARK: - Properties
+    
     let smackLabel: UILabel = {
         let label = UILabel()
         label.text = "Smack"
@@ -70,6 +71,7 @@ final class SideMenuVC: UIViewController {
     }()
     
     // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -93,6 +95,7 @@ final class SideMenuVC: UIViewController {
     }
     
     // MARK: - Helper functions
+    
     func setupView() {
         self.view.backgroundColor = .white
         self.view = GradientView()
@@ -121,19 +124,29 @@ final class SideMenuVC: UIViewController {
             avatarImageView.backgroundColor = .clear
             loginButton.pin.sizeToFit(.widthFlexible)
         }
+        channelsTable.reloadData()
     }
     
     @objc func userDataDidChange(_ notif: Notification) {
         setupUserInfo()
     }
+    
     // MARK: - Button functions
+    
     @objc func createChannel(_ sender: Any) {
-        
+        if AuthService.instance.isLoggedIn {
+            let addChannelVC = AddChannelVC()
+            addChannelVC.modalPresentationStyle = .custom
+            present(addChannelVC, animated: true, completion: nil)
+        }
+        else {
+            //Display error window?
+        }
     }
     
     @objc func promptLogin(_ sender: UIButton) {
         if AuthService.instance.isLoggedIn {
-            let profileVC: ProfileVC = ProfileVC()
+            let profileVC = ProfileVC()
             profileVC.modalPresentationStyle = .custom
             present(profileVC, animated: true, completion: nil)
         }
@@ -146,6 +159,7 @@ final class SideMenuVC: UIViewController {
 }
 
 // MARK: - Tableview Extension
+
 extension SideMenuVC: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -153,17 +167,16 @@ extension SideMenuVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return MessageService.instance.channels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "channel cell") as? ChannelCell {
-            //Change channel name
+            cell.configureCell(channel: MessageService.instance.channels[indexPath.row])
             return cell
         }
         else {
             return ChannelCell()
         }
     }
-    
 }
